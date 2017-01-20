@@ -1,3 +1,7 @@
+## Source control scripts folder 
+chr.dir.source.control.scripts <- 
+  "M:/Models/Bacteria/HSPF/bacteria-sub-model-testing/SourceControl"
+
 ## hspf simulation folder
 chr.dir.hspf <- "M:/Models/Bacteria/HSPF/bacteria-sub-model-testing/All"
 
@@ -11,3 +15,7 @@ chr.pat.model <- "*Model\\.R"
 df.sub.model.info <- get.sub.mode.info(
   chr.dir.sub.models = chr.dir.sub.models,
   chr.pat.model = chr.pat.model)
+
+## load functions
+source(paste0(chr.dir.source.control.scripts, "/", 
+              "get-sub-model-info.R"))
