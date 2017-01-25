@@ -14,3 +14,8 @@ chr.pat.model <- "*Model\\.R"
 ## load functions
 source(paste0(chr.dir.source.control.scripts, "/", 
               "get-sub-model-info.R"))
+source(paste0(chr.dir.source.control.scripts, "/", 
+              "get-sub-model-input.R"))
+
+## pattern as a regular expression to search for input file names
+chr.pat.sub.model.input <- "*\\.txt"
