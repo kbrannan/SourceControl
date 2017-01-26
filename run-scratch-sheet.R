@@ -1,3 +1,7 @@
+## load the general input script
+source(file = "M:\\Models\\Bacteria\\HSPF\\bacteria-sub-model-testing\\SourceControl\\General-input-for-testing.R")
+
+
 ## get the sub model information
 df.sub.model.info <- get.sub.mode.info(
   chr.dir.sub.models = chr.dir.sub.models,
