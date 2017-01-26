@@ -1,19 +1,13 @@
 ## run-sub-models-get-output
 
-tmp.sub.wtsd <- as.list(x = names(df.sub.model.input.files[1,c(-1,-2)]))
-
-tmp.sources <- as.list( x = df.sub.model.info[,1])
-
-tmp.sources[[1]] <- tmp.sub.wtsd
+lst.output <- list()
 
 ii <- 1
 
-source(paste0(df.sub.model.info[ii,2:3], collapse = "/"),
-             functions = "cur.sub.model")
+chr.cur.sub.model.file <- paste0(df.sub.model.info[ii,2:3], collapse = "/")
 
 env.sub <- new.env()
-source(paste0(df.sub.model.info[ii,2:3], collapse = "/"),
-       local=env.sub)
+source(chr.cur.sub.model.file, local=env.sub)
 chr.cur.sub.model <- ls(envir = env.sub)
 rm(list=ls(envir = env.sub), envir = env.sub)
 
@@ -25,24 +19,41 @@ chk.file <- function(f,p) {
   if(is.na(f) != TRUE) paste0(p, "/", f)
 }
 
-vec.cur.sub.model.input <- sapply(df.sub.model.input.files[ii, c(-1,-2)], chk.file, df.sub.model.info$folder[ii])
+vec.cur.sub.model.input <- 
+  do.call(rbind, sapply(df.sub.model.input.files[ii, c(-1,-2)], 
+                        chk.file, df.sub.model.info$folder[ii]))
+do.call(cbind,dimnames(vec.cur.sub.model.input)[1])
 
 jj <- 1
 
-chr.cur.run <- paste0(chr.cur.sub.model, "(",
-                      vec.cur.sub.model.input[jj], ")")
+source(chr.cur.sub.model.file)
 
-expr.cur.model <- expression(paste0("junk <- ",chr.cur.run))
-
-eval(parse(text = chr.cur.run))
-
-chr.cur.run <- gsub("/", "\\\\", chr.cur.run)
-
-myfun <- function(x, fun) {
+myfun <- function(x, fun, f.env) {
   output <- NA
-  if (is.character(fun)) fun <- match.fun(fun)
-  if(file.exists(x)) output <- fun(x)
+  if (is.character(fun)) func <- match.fun(fun)
+  if(file.exists(x)) output <- func(x)
   return(output)
 }
-file.exists(vec.cur.sub.model.input[3])
-junk <- lapply(vec.cur.sub.model.input, myfun, chr.cur.sub.model)
+
+lst.cur.source <- lapply(vec.cur.sub.model.input, myfun, chr.cur.sub.model)
+names(lst.cur.source) <- df.sub.model.info$source[ii]
+
+names(lst.cur.source) <- do.call(cbind,dimnames(vec.cur.sub.model.input)[1])
+
+rm(list = c(eval(chr.cur.sub.model)))
+
+lst.output[[length(lst.output) + 1]] <- 
+  list(eval(
+    parse(text = paste0(df.sub.model.info$source[ii], " = lst.cur.source"))))
+names(lst.output[[length(lst.output)]]) <- df.sub.model.info$source[ii]
+str(lst.output[[1]][1], max.level = 1)
+lst.output[[1]]$Cow.Calf[1]
+
+chr.cur.name.src <- names(lst.output[[1]])
+
+chr.cur.sub.wtsds <- names(lst.output[[1]][chr.cur.name.src][[1]])
+
+ii.src <- 1
+ii.sub <- 3
+
+lst.output[[1]][chr.cur.name.src][[1]][chr.cur.sub.wtsds[ii.sub]]
