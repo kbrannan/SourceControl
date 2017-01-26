@@ -51,6 +51,7 @@ get.sub.model.input <- function(df.sub.model.sources.folders,
     }
     rm(tmp.files, tmp.col.nums)  
   }  
+  return(df.sub.model.input)
 }
 
 
