@@ -16,6 +16,8 @@ source(paste0(chr.dir.source.control.scripts, "/",
               "get-sub-model-info.R"))
 source(paste0(chr.dir.source.control.scripts, "/", 
               "get-sub-model-input.R"))
+source(paste0(chr.dir.source.control.scripts, "/", 
+              "run-source-model-for-sub-wtds.R"))
 
 ## pattern as a regular expression to search for input file names
 chr.pat.sub.model.input <- "*\\.txt"
