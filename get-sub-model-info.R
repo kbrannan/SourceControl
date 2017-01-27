@@ -1,4 +1,4 @@
-get.sub.mode.info <- function(chr.dir.sub.models = NULL,
+get.sub.model.info <- function(chr.dir.sub.models = NULL,
                               chr.pat.model = NULL) {
 ## gets source name, folder and filename for the sub-models
 ## input

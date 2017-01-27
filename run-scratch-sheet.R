@@ -3,7 +3,7 @@ source(file = "M:\\Models\\Bacteria\\HSPF\\bacteria-sub-model-testing\\SourceCon
 
 
 ## get the sub model information
-df.sub.model.info <- get.sub.mode.info(
+df.sub.model.info <- get.sub.model.info(
   chr.dir.sub.models = chr.dir.sub.models,
   chr.pat.model = chr.pat.model)
 
