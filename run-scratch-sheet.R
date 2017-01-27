@@ -12,3 +12,13 @@ df.sub.model.input.files <-
   get.sub.model.input(
     df.sub.model.sources.folders = df.sub.model.info[,1:2],
     chr.pat.sub.model.input = chr.pat.sub.model.input)
+
+## run all the source sub models for all the sub watersheds
+lst.output <- run.sub.models.for.sources(df.sub.model.info, 
+                                         df.sub.model.input.files)
+
+
+str(lst.output, max.level = 1)
+
+
+
