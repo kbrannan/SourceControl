@@ -8,11 +8,12 @@ run.sub.models.for.sources <- function(df.sub.model.info,
   
   
   ## start function running for all sources
-  lst.output <- list()
-  
+  lst.output <- list(source.names = df.sub.model.info$source,
+                     sub.wtsd.names = names(df.sub.model.input.files[1, c(-1,-2)]))
+
   ## number of sub watersheds
   num.sub.wtsd <- length(df.sub.model.input.files[1, c(-1, -2)])
-  
+
   ## number of sources
   num.sources <- length(df.sub.model.info$source)
   
@@ -38,8 +39,9 @@ run.sub.models.for.sources <- function(df.sub.model.info,
   }
   
   ## set name of the of the source output list in overall list  
-  names(lst.output) <- df.sub.model.info$source
-  
+  names(lst.output) <- c("source.names", "sub.wtsd.names",
+                         df.sub.model.info$source)
+
   ## return the list of output for sources
   return(lst.output)
 }
