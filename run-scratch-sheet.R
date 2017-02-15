@@ -14,5 +14,10 @@ df.sub.model.input.files <-
     chr.pat.sub.model.input = chr.pat.sub.model.input)
 
 ## run all the source sub models for all the sub watersheds
-lst.output <- run.sub.models.for.sources(df.sub.model.info, 
+##lst.output <- run.sub.models.for.sources(df.sub.model.info, 
+##                                         df.sub.model.input.files)
+
+## run in parallel all the source sub models for all the sub watersheds
+lst.output <- run.sub.models.for.sources.parallel(df.sub.model.info, 
                                          df.sub.model.input.files)
+
