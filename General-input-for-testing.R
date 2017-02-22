@@ -3,16 +3,17 @@ chr.dir.source.control.scripts <-
   "M:/Models/Bacteria/HSPF/bacteria-sub-model-testing/SourceControl"
 
 ## hspf simulation folder
-chr.dir.hspf <- "M:/Models/Bacteria/HSPF/bacteria-sub-model-testing/All"
+##chr.dir.hspf <- "M:/Models/Bacteria/HSPF/bacteria-sub-model-testing/All"
 
 ## hspf input file name
-chr.file.uci <- "bigelkwq.uci"
+##chr.file.uci <- "bigelkwq.uci"
 
 ## hspf suplimental file name
-chr.file.sup <- "bigelkwq.sup"
+##chr.file.sup <- "bigelkwq.sup"
 
 ## folder containing all the sub-model folders
-chr.dir.sub.models <- paste0(chr.dir.hspf, "/sub-models")
+##chr.dir.sub.models <- paste0(chr.dir.hspf, "/sub-models")
+chr.dir.sub.models <- paste0(chr.dir.source.control.scripts, "/sub-models")
 
 ## pattern as a regular expression to search for model R files
 chr.pat.model <- "*Model\\.R"
