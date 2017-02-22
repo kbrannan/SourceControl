@@ -30,6 +30,8 @@ source(paste0(chr.dir.source.control.scripts, "/",
               "run-sub-models-for-sources.R"))
 source(paste0(chr.dir.source.control.scripts, "/", 
               "run-sub-models-for-sources-parallel.R"))
+source(paste0(chr.dir.source.control.scripts, "/", 
+              "get-accum-load-to-pls.R"))
 
 ## pattern as a regular expression to search for input file names
 chr.pat.sub.model.input <- "*\\.txt"
