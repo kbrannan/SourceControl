@@ -7,7 +7,7 @@ get.load.to.stream <- function(chr.sub.wtsd, lst.loads) {
   ##             The list is output from run.sub.models.for.sources.parallel
   
   ## prefix used to search source data.frames for accum loads
-  chr.prefix <- "Bacteria.Instream.*"
+  chr.prefix <- "Bacteria.direct.to.stream"
   
   ## the number od sources in the loads list
   n.src <- length(lst.loads$source.names)
@@ -55,7 +55,7 @@ get.load.to.stream <- function(chr.sub.wtsd, lst.loads) {
                           stringsAsFactors = FALSE,
                          row.names = NULL)
   
-  names(df.loads) <- c("month", paste0(gsub("\\.\\*", "", chr.prefix), ".to.stream"))
+  names(df.loads) <- c("month", gsub("\\.\\*", "", chr.prefix))
   
   ##  return monthly loads data.frame as function output
   return(df.loads)
