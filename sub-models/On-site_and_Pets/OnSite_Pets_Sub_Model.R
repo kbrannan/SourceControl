@@ -101,7 +101,7 @@ onsite_pets <- function(chr.input.file) {
 					              		   Bacteria.onsite.NearStrmStrctFailure1974to1986=onsite.NearStrmStrctFailure1974to1986.load,
 					              		   Bacteria.onsite.NearStrmStrctFailurePost1986=onsite.NearStrmStrctFailurePost1986.load,
 					              		   Bacteria.onsite.NearStrmStrctFailure=onsite.NearStrmStrctFailure.load,
-					              		   Bacteria.onsite.NearStrmStrctFailure.to.stream.load=onsite.NearStrmStrctFailure.to.stream.load,
+					              		   Bacteria.direct.to.stream=onsite.NearStrmStrctFailure.to.stream.load,
                                Accum.RAOCUT=Accum.RAOCUT,
 					              		   Lim.RAOCUT=all.SQLIMFactor * Accum.RAOCUT,
                                stringsAsFactors=FALSE)

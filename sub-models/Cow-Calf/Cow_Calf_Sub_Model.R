@@ -138,7 +138,7 @@ cow.calf <- function(chr.input.file) {
     Bacteria.InForest = bac.forest.lnd,
     Bacteria.InForestInStream = bac.forest.w.strm,
 
-    Bacteria.Instream = bac.strm,
+    Bacteria.direct.to.stream = bac.strm,
     Accum.Pasture = bac.pasture.lnd / lu.pasture.area,
     Accum.Forest = bac.forest.lnd / lu.forest.area,
     

@@ -60,7 +60,7 @@ wildlifeBeaver <- function(chr.input.file) {
     pop.in.stream=pop.in.stream,
     Bacteria.total=bac.total,
     Bacteria.on.land=bac.on.land,
-    Bacteria.in.stream=bac.in.stream,
+    Bacteria.direct.to.stream=bac.in.stream,
     Accum.forest=accum.forest,
     Lim.forest=amn.SQLIM.factor * accum.forest,
     stringsAsFactors=FALSE)
