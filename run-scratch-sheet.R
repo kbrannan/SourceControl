@@ -21,3 +21,7 @@ df.sub.model.input.files <-
 lst.output <- run.sub.models.for.sources.parallel(df.sub.model.info, 
                                          df.sub.model.input.files)
 
+## get accum load
+df.load <- get.accum.load.to.pls(lst.output$sub.wtsd.names[3],
+                                 "forest", lst.output)
+
