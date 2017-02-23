@@ -21,6 +21,11 @@ df.sub.model.input.files <-
 lst.output <- run.sub.models.for.sources.parallel(df.sub.model.info, 
                                          df.sub.model.input.files)
 
+## run get.accum.load.to.pls, get.lim.load.to.pls and get.load.to.stream for
+## all sub-watersheds and put accum, lim and stream loads into data frames
+## for each sub-watershed and put the data.frames into a list. I will use
+## the list to rewrite the sup-file and write the MUTSIN files.
+
 ii.sub <- 12
 chr.pls <- "forest"
 ## get accum load
