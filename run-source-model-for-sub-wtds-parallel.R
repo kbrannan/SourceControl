@@ -36,6 +36,7 @@ run.source.model.for.sub.wtds.parallel <- function(vec.sub.model.input.files,
   
   ## create cluster
   no_cores <- detectCores() - 1
+  if(no_cores < 1) no_cores <- 1
   c1 <- makeCluster(no_cores)
   
   ## input files with paths
