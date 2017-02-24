@@ -21,23 +21,14 @@ df.sub.model.input.files <-
 lst.output <- run.sub.models.for.sources.parallel(df.sub.model.info, 
                                          df.sub.model.input.files)
 
-## run get.accum.load.to.pls, get.lim.load.to.pls and get.load.to.stream for
-## all sub-watersheds and put accum, lim and stream loads into data frames
-## for each sub-watershed and put the data.frames into a list. I will use
-## the list to rewrite the sup-file and write the MUTSIN files.
+## run get.loads.for.sub.wtsd for all sub-watersheds and put the 
+## data.frames into a list. I will use the list to rewrite the sup-file and write the MUTSIN files.
+lst.loads <- lapply(lst.output$sub.wtsd.names, 
+                    get.loads.for.sub.wtsd, lst.output)
+names(lst.loads) <- lst.output$sub.wtsd.names
 
-ii.sub <- 12
-chr.pls <- "forest"
-## get accum load
-df.load.accum <- get.accum.load.to.pls(lst.output$sub.wtsd.names[ii.sub],
-                                 chr.pls, lst.output)
+## can't access get.pls.names from with in "get.loads.for.sub.wtsd" function
+## lst.loads.p <- get.loads.for.sub.wtsd.parallel(lst.output$sub.wtsd.names,
+##                                                lst.output)
 
-## get lim load
-df.load.lim <- get.lim.load.to.pls(lst.output$sub.wtsd.names[ii.sub],
-                                 chr.pls, lst.output)
-## check lim/accum ratio
-df.load.lim[,2] / df.load.accum[, 2]
 
-## get load to stream
-df.load.stream <- get.load.to.stream(lst.output$sub.wtsd.names[ii.sub], 
-                                     lst.output)

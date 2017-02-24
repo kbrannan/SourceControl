@@ -18,6 +18,9 @@ chr.dir.sub.models <- paste0(chr.dir.source.control.scripts, "/sub-models")
 ## pattern as a regular expression to search for model R files
 chr.pat.model <- "*Model\\.R"
 
+## pattern as a regular expression to search for input file names
+chr.pat.sub.model.input <- "*\\.txt"
+
 ## load functions
 source(paste0(chr.dir.source.control.scripts, "/", 
               "get-sub-model-info.R"))
@@ -37,6 +40,11 @@ source(paste0(chr.dir.source.control.scripts, "/",
               "get-lim-load-to-pls.R"))
 source(paste0(chr.dir.source.control.scripts, "/", 
               "get-load-to-stream.R"))
+source(paste0(chr.dir.source.control.scripts, "/", 
+              "get-pls-names.R"))
+source(paste0(chr.dir.source.control.scripts, "/", 
+              "get-loads-for-sub-wtsd.R"))
+source(paste0(chr.dir.source.control.scripts, "/", 
+              "get-loads-for-sub-wtsds.parallel.R"))
 
-## pattern as a regular expression to search for input file names
-chr.pat.sub.model.input <- "*\\.txt"
+
