@@ -1,4 +1,4 @@
-get.loads.for.sub.wtsd <- function(chr.sub.wtsd.name, lst.load) {
+get.loads.for.sub.wtsd <- function(chr.sub.wtsd.name, lst.loads) {
   ## function contructs data frma in long format for loads from all sources
   ## to each pls in a sub watershed for accum, lim and stream loads
   ##
@@ -9,6 +9,9 @@ get.loads.for.sub.wtsd <- function(chr.sub.wtsd.name, lst.load) {
   
   ## get vector for month names
   chr.months <- lst.loads[lst.loads[[1]][1]][[1]][[1]]$Month
+  
+  ## get the pls names
+  chr.pls.names <- get.pls.names(lst.loads)
   
   ## create wrapper functions for using get.accum.load.to.pls and 
   ## get.lim.load.to.pls in lapply
@@ -77,6 +80,10 @@ get.loads.for.sub.wtsd <- function(chr.sub.wtsd.name, lst.load) {
   df.sub.wtsd.load <- rbind(df.cur.accum, df.cur.lim, df.cur.stream)
   df.sub.wtsd.load <- cbind(sub.wtsd = chr.sub.wtsd.name, df.sub.wtsd.load)
   
+  ## make all catagorical varbles character, not factor
+  df.sub.wtsd.load <- data.frame(
+    lapply(df.sub.wtsd.load[, 1:4], as.character),
+    df.sub.wtsd.load$load, stringsAsFactors = FALSE)
   ## done
   return(df.sub.wtsd.load)
 }
