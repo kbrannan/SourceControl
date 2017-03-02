@@ -33,4 +33,4 @@ names(lst.loads) <- lst.output$sub.wtsd.names
 
 ## get the lines in the sup file for the pls
 df.sup.lines <- get.pls.line.info(paste0(chr.dir.hspf, "/",
-                                         chr.file.hspf.uci))
+                                         chr.file.uci))
