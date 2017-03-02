@@ -31,4 +31,6 @@ names(lst.loads) <- lst.output$sub.wtsd.names
 ## lst.loads.p <- get.loads.for.sub.wtsd.parallel(lst.output$sub.wtsd.names,
 ##                                                lst.output)
 
-
+## get the lines in the sup file for the pls
+df.sup.lines <- get.pls.line.info(paste0(chr.dir.hspf, "/",
+                                         chr.file.hspf.uci))

@@ -4,9 +4,10 @@ chr.dir.source.control.scripts <-
 
 ## hspf simulation folder
 ##chr.dir.hspf <- "M:/Models/Bacteria/HSPF/bacteria-sub-model-testing/All"
+chr.dir.hspf <- paste0(chr.dir.source.control.scripts, "/hspf")
 
 ## hspf input file name
-##chr.file.uci <- "bigelkwq.uci"
+chr.file.uci <- "bigelkwq.uci"
 
 ## hspf suplimental file name
 ##chr.file.sup <- "bigelkwq.sup"
@@ -44,7 +45,10 @@ source(paste0(chr.dir.source.control.scripts, "/",
               "get-pls-names.R"))
 source(paste0(chr.dir.source.control.scripts, "/", 
               "get-loads-for-sub-wtsd.R"))
+## not working yet
+##source(paste0(chr.dir.source.control.scripts, "/", 
+##              "get-loads-for-sub-wtsds.parallel.R"))
 source(paste0(chr.dir.source.control.scripts, "/", 
-              "get-loads-for-sub-wtsds.parallel.R"))
+              "get-pls-line-info.R"))
 
 
