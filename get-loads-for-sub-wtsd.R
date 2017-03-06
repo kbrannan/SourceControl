@@ -84,6 +84,8 @@ get.loads.for.sub.wtsd <- function(chr.sub.wtsd.name, lst.loads) {
   df.sub.wtsd.load <- data.frame(
     lapply(df.sub.wtsd.load[, 1:4], as.character),
     df.sub.wtsd.load$load, stringsAsFactors = FALSE)
+  ## set the names for the data.frame
+  names(df.sub.wtsd.load) <- c("sub.wtsd", "load.to", "hspf.input", "month", "load")
   ## done
   return(df.sub.wtsd.load)
 }
