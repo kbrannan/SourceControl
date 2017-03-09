@@ -2,6 +2,10 @@
 ## MUTSIN output file name
 chr.name.MUSTIN <- "direct01.mut"
 
+## HSPF related input
+chr.dir.hspf.mutsin <- chr.dir.hspf
+chr.file.uci.mutsin <- chr.file.uci
+
 ## watershed and sub-watershed names
 chr.name.wtsd <- "Upper Yaquina River"
 chr.name.sub.wtsd <- "sub.wtsd.01"
@@ -13,7 +17,8 @@ df.cur <- lst.loads["sub.wtsd.01"][[1]]
 
 ## function
 ## read uci file and get simulation period
-chr.input.hspf.uci <- scan(file = paste0(chr.dir.hspf, "/", chr.file.uci),
+chr.input.hspf.uci <- scan(file = paste0(chr.dir.hspf.mutsin, "/", 
+                                         chr.file.uci.mutsin),
                            what = "character", sep = "\n",
                            quiet = TRUE)
 int.global <- grep("GLOBAL", chr.input.hspf.uci)
@@ -69,5 +74,7 @@ chr.mutsin <- c("**** Direct Deposit Fecal Coliform Load",
                   strftime(df.mutsin$date, format = "      %Y %m %d 24 00"),
                   sprintf(fmt = "   %.5E", df.mutsin$load)))
 
-
-head(chr.mutsin, 25)
+## write MUTSIN file
+write.table(chr.mutsin, file = paste0(chr.dir.hspf.mutsin, "/",
+                                      chr.name.MUSTIN),
+            col.names = FALSE, row.names = FALSE, quote = FALSE)
