@@ -42,14 +42,12 @@ tmp.seq.date <- seq(
   to = as.POSIXct(paste0(1900 + dte.sim[2]$year + 1, "-01-010:0:0")),
   by = "months")
 tmp.seq.date <- as.Date(tmp.seq.date) - 1
-str(tmp.seq.date)
 
 
-## ctreate data.frame of date sequence and the corresponding month of each data
+## create data.frame of date sequence and the corresponding month of each data
 tmp.date <- data.frame(date = tmp.seq.date,
                        month = strftime(tmp.seq.date, format = "%b"),
                        stringsAsFactors = FALSE)
-str(tmp.date)
 
 ## get monthly loads to stream
 tmp.stream <- df.cur[df.cur$load.to == "stream", c("month", "load")]
