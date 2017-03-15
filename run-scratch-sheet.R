@@ -34,3 +34,19 @@ names(lst.loads) <- lst.output$sub.wtsd.names
 ## get the lines in the sup file for the pls
 df.sup.lines <- get.pls.line.info(paste0(chr.dir.hspf, "/",
                                          chr.file.uci))
+
+## write mutsin files
+## create wrapper function for write.mutsin to use in lapply
+wrapper.write.mutsin <- function(chr.name.sub.wtsd, lst.loads, chr.dir.hspf.mutsin, 
+                                 chr.file.uci.mutsin, chr.name.wtsd) {
+  ## load data.frame
+  df.cur <- lst.loads[chr.name.sub.wtsd][[1]]
+  chr.name.MUSTIN <- 
+    paste0("direct", gsub("[^0-9]", "", chr.name.sub.wtsd), ".mut")
+  write.mutsin(df.cur,chr.dir.hspf.mutsin,
+               chr.file.uci.mutsin,chr.name.MUSTIN,
+               chr.name.wtsd,chr.name.sub.wtsd)
+}
+## generate mutsin files
+junk <- lapply(names(lst.loads), wrapper.write.mutsin, lst.loads, chr.dir.hspf, 
+       chr.file.uci, "Upper Yaquina River")
