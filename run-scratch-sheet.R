@@ -50,3 +50,4 @@ wrapper.write.mutsin <- function(chr.name.sub.wtsd, lst.loads, chr.dir.hspf.muts
 ## generate mutsin files
 junk <- lapply(names(lst.loads), wrapper.write.mutsin, lst.loads, chr.dir.hspf, 
        chr.file.uci, "Upper Yaquina River")
+rm(junk)
