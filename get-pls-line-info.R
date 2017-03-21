@@ -9,23 +9,6 @@ get.pls.line.info <- function(chr.file) {
   int.str <- min(grep("^PERLND", chr.input.hspf.uci))
   int.end <- grep("^END PERLND", chr.input.hspf.uci)
 
-  ## Funtion the creates sequence for repeated pls numbers
-  gen.pls.nums <- function(x.in) {
-    x <- cbind(x.in[1],x.in[2],x.in[3], row.names= NULL)
-    if(!is.na(x[2])) {
-      pls.seq <- seq(from = as.numeric(x[1]), 
-                     to = as.numeric(x[2]), by = 1)
-      df.out <- data.frame(pls.num = pls.seq, sup.line = x[3])
-    }
-    if(is.na(x[2])) {
-      df.out <- data.frame(
-        pls.num = x[1],
-        sup.line = x[3])
-    }
-    names(df.out) <- c("pls.num", "sup.line")
-    return(df.out)
-  }
-  
   ## get pls info from GEN-INFO block
   chr.gen.info <- 
     chr.input.hspf.uci[
@@ -47,7 +30,14 @@ get.pls.line.info <- function(chr.file) {
                                  strsplit(as.character(df.gen.info[, 3]),
                                           "/"))[,1])
   rm(int.drop, chr.gen.info)
-
+  
+## function gets sup number given pls numer and mon-accum/sqolim data frame
+  get.sup.from.pls <- function(num.pls, df.mon) {
+    
+  }
+  
+  
+  
 ## get line numbers for MON-ACCUM
   chr.mon.accum <- 
     chr.input.hspf.uci[
