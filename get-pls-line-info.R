@@ -17,11 +17,11 @@ get.pls.line.info <- function(chr.file) {
                   chr.input.hspf.uci[int.str:int.end])) -1):
         (int.str + 
            grep("END GEN-INFO", chr.input.hspf.uci[int.str:int.end]) - 1)]
-  int.drop <- -1 * c(grep("GEN-INFO", chr.gen.info),
-                     grep("\\*\\*", chr.gen.info))
+  int.drop <- -1 * sort(c(grep("GEN-INFO", chr.gen.info),
+                     grep("\\*\\*", chr.gen.info)))
   chr.gen.info <- chr.gen.info[int.drop]
   df.gen.info <- data.frame(do.call(rbind,
-                                    strsplit(chr.gen.info[int.drop], 
+                                    strsplit(chr.gen.info, 
                                              "( ){1,}"))[, c(2,4,5)])
   names(df.gen.info) <- c("pls.num", "sub", "pls.name.lng")
   df.gen.info <- cbind(df.gen.info, 
@@ -33,12 +33,28 @@ get.pls.line.info <- function(chr.file) {
   
 ## function gets sup number given pls numer and mon-accum/sqolim data frame
   get.sup.from.pls <- function(num.pls, df.mon) {
+    num.pls <- as.numeric(num.pls)
+    no.na <- as.numeric(row.names(df.mon[is.na(df.mon$end) == FALSE, ]))
+    df.mon.no.nas <- df.mon[no.na, ]
     
+    chr.sup.line <- character(0)
+
+    if(sum(df.mon$str == num.pls) > 0) {
+      chr.sup.line <- df.mon$sup.line[df.mon$str == num.pls]
+    }
+    
+    if(sum(df.mon.no.nas$end == num.pls) > 0) {
+      chr.sup.line <- df.mon.no.nas$sup.line[df.mon.no.nas$end == num.pls]
+    }
+    
+    if(length(chr.sup.line) == 0) {
+      chr.sup.line <- df.mon.no.nas$sup.line[((df.mon.no.nas$str < num.pls) & 
+                               (df.mon.no.nas$end > num.pls))]
+    }
+    return(chr.sup.line)
   }
-  
-  
-  
 ## get line numbers for MON-ACCUM
+## get MON-ACCUM block
   chr.mon.accum <- 
     chr.input.hspf.uci[
       (int.str + 
@@ -50,19 +66,20 @@ get.pls.line.info <- function(chr.file) {
   int.drop <- -1 * c(grep("MON-ACCUM", chr.mon.accum), 
                      grep("\\*\\*", chr.mon.accum))
   chr.mon.accum <- chr.mon.accum[int.drop]
+## create data.frame for MON-ACCUM block with pls nums and sup nums
   df.mon.accum <- data.frame(
     str = as.numeric(gsub(" ", "", substr(chr.mon.accum, 3, 5))),
     end = as.numeric(gsub(" ", "", substr(chr.mon.accum, 8, 10))),
     sup.line = gsub(" ", "", (gsub("~","",
                                    substr(chr.mon.accum, 71, 80)))))
-  
-  df.pls.sup.nums.mon.accum <- data.frame()
-  for(ii in 1:length(df.mon.accum[,1])) {
-    df.pls.sup.nums.mon.accum <- 
-      rbind(df.pls.sup.nums.mon.accum, 
-            gen.pls.nums(df.mon.accum[ii,]))
-  }
   rm(chr.mon.accum, int.drop)
+## get MON-ACCUM sup nums for the pls nums
+  df.pls.sup.nums.mon.accum <- 
+    data.frame(pls.num = df.gen.info$pls.num,
+               sup.num = do.call(rbind, 
+                                 lapply(df.gen.info$pls.num, get.sup.from.pls,
+                                        df.mon.accum)), 
+               stringsAsFactors = FALSE)
   names(df.pls.sup.nums.mon.accum) <- c("pls.num", "sup.num.accum")
 
 ## get line numbers for MON-SQOLIM
@@ -82,12 +99,14 @@ get.pls.line.info <- function(chr.file) {
     end = as.numeric(gsub(" ", "", substr(chr.mon.sqolim, 8, 10))),
     sup.line = gsub(" ", "", (gsub("~","",
                                    substr(chr.mon.sqolim, 71, 80)))))
-  df.pls.sup.nums.mon.sqolim <- data.frame()
-  for(ii in 1:length(df.mon.sqolim[,1])) {
-    df.pls.sup.nums.mon.sqolim <- 
-      rbind(df.pls.sup.nums.mon.sqolim, 
-            gen.pls.nums(df.mon.sqolim[ii,]))
-  }
+  df.pls.sup.nums.mon.sqolim <- 
+    data.frame(pls.num = df.gen.info$pls.num,
+               sup.num = do.call(rbind, 
+                                 lapply(df.gen.info$pls.num, get.sup.from.pls,
+                                        df.mon.sqolim)), 
+               stringsAsFactors = FALSE)
+  
+  
   rm(chr.mon.sqolim, int.drop)
   names(df.pls.sup.nums.mon.sqolim) <- c("pls.num", "sup.num.sqolim")
   
