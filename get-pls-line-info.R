@@ -34,6 +34,7 @@ get.pls.line.info <- function(chr.file) {
 ## function gets sup number given pls numer and mon-accum/sqolim data frame
   get.sup.from.pls <- function(num.pls, df.mon) {
     num.pls <- as.numeric(num.pls)
+    df.mon$sup.line <- as.character(df.mon$sup.line)
     no.na <- as.numeric(row.names(df.mon[is.na(df.mon$end) == FALSE, ]))
     df.mon.no.nas <- df.mon[no.na, ]
     
@@ -42,11 +43,9 @@ get.pls.line.info <- function(chr.file) {
     if(sum(df.mon$str == num.pls) > 0) {
       chr.sup.line <- df.mon$sup.line[df.mon$str == num.pls]
     }
-    
     if(sum(df.mon.no.nas$end == num.pls) > 0) {
       chr.sup.line <- df.mon.no.nas$sup.line[df.mon.no.nas$end == num.pls]
     }
-    
     if(length(chr.sup.line) == 0) {
       chr.sup.line <- df.mon.no.nas$sup.line[((df.mon.no.nas$str < num.pls) & 
                                (df.mon.no.nas$end > num.pls))]
@@ -77,8 +76,8 @@ get.pls.line.info <- function(chr.file) {
   df.pls.sup.nums.mon.accum <- 
     data.frame(pls.num = df.gen.info$pls.num,
                sup.num = do.call(rbind, 
-                                 lapply(df.gen.info$pls.num, get.sup.from.pls,
-                                        df.mon.accum)), 
+                                 lapply(as.character(df.gen.info$pls.num), 
+                                        get.sup.from.pls, df.mon.accum)), 
                stringsAsFactors = FALSE)
   names(df.pls.sup.nums.mon.accum) <- c("pls.num", "sup.num.accum")
 
@@ -102,8 +101,8 @@ get.pls.line.info <- function(chr.file) {
   df.pls.sup.nums.mon.sqolim <- 
     data.frame(pls.num = df.gen.info$pls.num,
                sup.num = do.call(rbind, 
-                                 lapply(df.gen.info$pls.num, get.sup.from.pls,
-                                        df.mon.sqolim)), 
+                                 lapply(as.character(df.gen.info$pls.num), 
+                                        get.sup.from.pls, df.mon.sqolim)), 
                stringsAsFactors = FALSE)
   
   
