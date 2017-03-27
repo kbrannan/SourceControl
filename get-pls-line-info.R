@@ -110,8 +110,10 @@ get.pls.line.info <- function(chr.file) {
   names(df.pls.sup.nums.mon.sqolim) <- c("pls.num", "sup.num.sqolim")
   
   ## merge accum and sqlim data frames and return the result
+  ##options(stringsAsFactors = TRUE)
   df.pls.sup.num <- merge.data.frame(df.pls.sup.nums.mon.accum, 
                    df.pls.sup.nums.mon.sqolim, 
-                   by = c("pls.num"))
+                   by = c("pls.num"), stringsAsFactors = FALSE)
+  df.pls.sup.num <- merge(df.gen.info, df.pls.sup.num, by = "pls.num")
   return(df.pls.sup.num)
 }
