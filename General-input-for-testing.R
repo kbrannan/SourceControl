@@ -10,7 +10,7 @@ chr.dir.hspf <- paste0(chr.dir.source.control.scripts, "/hspf")
 chr.file.uci <- "bigelkwq.uci"
 
 ## hspf suplimental file name
-##chr.file.sup <- "bigelkwq.sup"
+chr.file.sup <- "bigelkwq.sup"
 
 ## folder containing all the sub-model folders
 ##chr.dir.sub.models <- paste0(chr.dir.hspf, "/sub-models")
