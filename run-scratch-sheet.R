@@ -34,6 +34,10 @@ names(lst.loads) <- lst.output$sub.wtsd.names
 ## get the lines in the sup file for the pls
 df.sup.lines <- get.pls.line.info(paste0(chr.dir.hspf, "/",
                                          chr.file.uci))
+## The pls name for developed land in the the sub-models is RAOCUT. Change this 
+## in df.sup.lines
+df.sup.lines$pls.name <- gsub("[dD]evel.*", "RAOCUT", 
+                              as.character(df.sup.lines$pls.name))
 
 ## write mutsin files
 ## create wrapper function for write.mutsin to use in lapply
