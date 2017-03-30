@@ -106,12 +106,30 @@ wildlifeDuck <- function(chr.input.file) {
   bac.forest.in.stream.season.2 <-  pop.forest.in.stream.season.2  * amn.bac.prod
   bac.RAOCUT.in.stream.season.2 <-  pop.RAOCUT.in.stream.season.2  * amn.bac.prod
   ## accum values
-  accum.pasture.season.1 <- bac.pasture.on.land.season.1 / lu.pasture.area
-  accum.forest.season.1 <-  bac.forest.on.land.season.1 / lu.forest.area
-  accum.RAOCUT.season.1 <-  bac.RAOCUT.on.land.season.1 / lu.RAOCUT.area
-  accum.pasture.season.2 <- bac.pasture.on.land.season.2 / lu.pasture.area
-  accum.forest.season.2 <-  bac.forest.on.land.season.2 / lu.forest.area
-  accum.RAOCUT.season.2 <-  bac.RAOCUT.on.land.season.2 / lu.RAOCUT.area
+  accum.pasture.season.1 <- 0
+  accum.forest.season.1 <-  0
+  accum.RAOCUT.season.1 <-  0
+  accum.pasture.season.2 <- 0
+  accum.forest.season.2 <-  0
+  accum.RAOCUT.season.2 <-  0
+  if(lu.pasture.area > 0) {
+    accum.pasture.season.1 <- bac.pasture.on.land.season.1 / lu.pasture.area
+  }
+  if(lu.forest.area > 0) {
+    accum.forest.season.1 <-  bac.forest.on.land.season.1 / lu.forest.area
+  }
+  if(lu.RAOCUT.area > 0) {
+    accum.RAOCUT.season.1 <-  bac.RAOCUT.on.land.season.1 / lu.RAOCUT.area
+  }
+  if(lu.pasture.area > 0) {
+    accum.pasture.season.2 <- bac.pasture.on.land.season.2 / lu.pasture.area
+  }
+  if(lu.forest.area > 0) {
+    accum.forest.season.2 <-  bac.forest.on.land.season.2 / lu.forest.area
+  }
+  if(lu.RAOCUT.area > 0) {
+    accum.RAOCUT.season.2 <-  bac.RAOCUT.on.land.season.2 / lu.RAOCUT.area
+  }
   ##
 ## Assemble output data frame
   ## season 1

@@ -151,10 +151,26 @@ wildlifeElk <- function(chr.input.file) {
   bac.pasture.in.stream.season.2 <- pop.pasture.in.stream.season.2 * amn.bac.prod
   bac.forest.in.stream.season.2 <-  pop.forest.in.stream.season.2  * amn.bac.prod
   ## accum values
-  accum.pasture.season.1 <- bac.pasture.on.land.season.1 / lu.pasture.area.season.1
-  accum.forest.season.1 <-  bac.forest.on.land.season.1 / lu.forest.area.season.1
-  accum.pasture.season.2 <- bac.pasture.on.land.season.2 / lu.pasture.area.season.2
-  accum.forest.season.2 <-  bac.forest.on.land.season.2 / lu.forest.area.season.2
+  accum.pasture.season.1 <- 0
+  accum.forest.season.1 <-  0
+  accum.pasture.season.2 <- 0
+  accum.forest.season.2 <-  0
+  if(lu.pasture.area.season.1 > 0) {
+    accum.pasture.season.1 <- bac.pasture.on.land.season.1 / 
+      lu.pasture.area.season.1
+  }
+  if(lu.forest.area.season.1 > 0) {
+    accum.forest.season.1 <-  bac.forest.on.land.season.1 / 
+      lu.forest.area.season.1
+  }
+  if(lu.pasture.area.season.2 > 0) {
+    accum.pasture.season.2 <- bac.pasture.on.land.season.2 / 
+      lu.pasture.area.season.2
+  }
+  if(lu.forest.area.season.2 > 0) {
+    accum.forest.season.2 <-  bac.forest.on.land.season.2 / 
+      lu.forest.area.season.2
+  }
 ## Assemble output data frame
   ## season 1
   df.output.season.1 <- data.frame(

@@ -49,7 +49,10 @@ wildlifeBeaver <- function(chr.input.file) {
   bac.on.land  <- amn.bac.prod * pop.on.land
   bac.in.stream   <- amn.bac.prod * pop.in.stream
   ### accum values
-  accum.forest  <- bac.on.land / lu.habitatarea
+  accum.forest  <- 0
+  fi(lu.habitatarea > 0) {
+    accum.forest  <- bac.on.land / lu.habitatarea
+  }
   
   ##
   ## Assemble output data frame

@@ -87,8 +87,14 @@ wildlifeOtter <- function(chr.input.file) {
   bac.on.land.forest  <- amn.bac.prod * pop.on.land.forest
   bac.in.stream   <- amn.bac.prod * pop.in.stream
   ### accum values
-  accum.pasture  <- bac.on.land.pasture / lu.pasture.area
-  accum.forest  <- bac.on.land.forest / lu.forest.area
+  accum.pasture  <- 0
+  accum.forest  <-  0
+  if(lu.pasture.area > 0) {
+    accum.pasture  <- bac.on.land.pasture / lu.pasture.area
+  }
+  if(lu.forest.area > 0) {
+    accum.forest  <- bac.on.land.forest / lu.forest.area
+  }
   ##
   ## Assemble output data frame
   df.output <- data.frame(

@@ -63,7 +63,10 @@ onsite_pets <- function(chr.input.file) {
   ### Pets
   pets.pop <- pets.NumOfHH * pets.PetsPerHH
   pets.bacteria.load <- pets.pop * pets.bac.prod
-  Accum.RAOCUT <- pets.bacteria.load / lu.RAOCUT.area
+  Accum.RAOCUT <- 0
+  if(lu.RAOCUT.area > 0) {
+    Accum.RAOCUT <- pets.bacteria.load / lu.RAOCUT.area
+  }
 
   ### On-stie
   onsite.NearStrmStrctPre1974    <- onsite.NumNearStrmStrct * onsite.StrctPre1974
@@ -82,7 +85,9 @@ onsite_pets <- function(chr.input.file) {
   onsite.NearStrmStrctFailure.load <- onsite.NearStrmStrctFailurePre1974.load + onsite.NearStrmStrctFailure1974to1986.load + onsite.NearStrmStrctFailurePost1986.load
   ## adjust load for structures near stream that may not have toilet facilities
   onsite.NearStrmStrctFailure.to.stream.load <- onsite.percent.to.stream * onsite.NearStrmStrctFailure.load
-  Accum.RAOCUT <- Accum.RAOCUT + (1- onsite.percent.to.stream) * onsite.NearStrmStrctFailure.load / lu.RAOCUT.area
+  if(lu.RAOCUT.area > 0) {
+    Accum.RAOCUT <- Accum.RAOCUT + (1- onsite.percent.to.stream) * onsite.NearStrmStrctFailure.load / lu.RAOCUT.area 
+  }
   ##
   ### Assemble output data frame
   df.output <- data.frame(Month=c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"),

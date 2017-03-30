@@ -116,6 +116,17 @@ cow.calf <- function(chr.input.file) {
   bac.forest.lnd  <- bac.forest.wo + bac.forest.w.lnd
   bac.strm <- bac.pasture.w.strm + bac.forest.w.strm
 
+  ## 
+  ## accum calc to accomadate zero land areas
+  accum.pasture <- 0
+  if(lu.pasture.area > 0) {
+    accum.pasture <- bac.pasture.lnd / lu.pasture.area
+  }
+  accum.forest <- 0
+  if(lu.forest.area > 0) {
+    accum.forest <- bac.forest.lnd / lu.forest.area
+  }
+
   ##
   ## SubModelOutput => df.output  
   df.output <- data.frame(
@@ -139,8 +150,8 @@ cow.calf <- function(chr.input.file) {
     Bacteria.InForestInStream = bac.forest.w.strm,
 
     Bacteria.direct.to.stream = bac.strm,
-    Accum.Pasture = bac.pasture.lnd / lu.pasture.area,
-    Accum.Forest = bac.forest.lnd / lu.forest.area,
+    Accum.Pasture = accum.pasture,
+    Accum.Forest = accum.forest,
     
     Lim.Pasture = ainfo.sqolim.fac * bac.pasture.lnd / lu.pasture.area,
     Lim.Forest = ainfo.sqolim.fac * bac.forest.lnd / lu.forest.area,
