@@ -64,7 +64,7 @@ for(jj in 1:length(chr.sub.wtsds)) {
                     chr.input.hspf.sup) + 1
     num.rows <- grep(chr.sup.lines[ii], df.cur.sup$sup.num)
     chr.input.hspf.sup[num.cur] <- 
-      paste0(sprintf(fmt = "  %.5E", df.cur.sup[num.rows, "load"]),
+      paste0(sprintf(fmt = "  %.7E", df.cur.sup[num.rows, "load"]),
              collapse = "")
     rm(num.cur, num.rows)
   }  
