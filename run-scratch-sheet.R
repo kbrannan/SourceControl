@@ -39,6 +39,10 @@ df.sup.lines <- get.pls.line.info(paste0(chr.dir.hspf, "/",
 df.sup.lines$pls.name <- gsub("[dD]evel.*", "RAOCUT", 
                               as.character(df.sup.lines$pls.name))
 
+## update the sup-file
+update.sup(chr.file = paste0(chr.dir.hspf, "/", chr.file.sup),
+           lst.loads =lst.loads)
+
 ## write mutsin files
 ## create wrapper function for write.mutsin to use in lapply
 wrapper.write.mutsin <- function(chr.name.sub.wtsd, lst.loads, chr.dir.hspf.mutsin, 
