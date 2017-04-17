@@ -47,6 +47,8 @@ source(paste0(chr.dir.source.control.scripts, "/",
               "get-loads-for-sub-wtsd.R"))
 source(paste0(chr.dir.source.control.scripts, "/", 
               "write-mutsin-files.R"))
+source(paste0(chr.dir.source.control.scripts, "/", 
+              "update-sup.R"))
 ## not working yet
 ##source(paste0(chr.dir.source.control.scripts, "/", 
 ##              "get-loads-for-sub-wtsds.parallel.R"))
