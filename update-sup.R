@@ -1,4 +1,13 @@
 update.sup <- function(chr.file = NULL, lst.loads = NULL) {
+## updates mon-accum and mon-sqolim data in the sup-file 
+## input
+## chr.file is the sup file to be updated 
+## lst.loads is the list of load data frames for all the sources in all 
+## the sub-watersheds 
+## for sub model input files
+## does not return anything
+## WARNING: The sup-file in chr.file is automatically overwritten
+
   
   ## get the names of the sub watersheds from lst.loads
   chr.sub.wtsds <- names(lst.loads)
