@@ -1,4 +1,10 @@
 get.pls.line.info <- function(chr.file) {
+## gets the info to relate pls to the mon-accum and mon-accum line numbers
+## in the sup-file from the uci file
+## input
+## chr.file is the uci file
+## returns data.frame that with pls numbers and the associated line numbers
+## in the sup -file
   
   ## read uci file
   chr.input.hspf.uci <- scan(file = chr.file,
