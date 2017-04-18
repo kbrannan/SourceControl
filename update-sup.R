@@ -4,7 +4,6 @@ update.sup <- function(chr.file = NULL, lst.loads = NULL) {
 ## chr.file is the sup file to be updated 
 ## lst.loads is the list of load data frames for all the sources in all 
 ## the sub-watersheds 
-## for sub model input files
 ## does not return anything
 ## WARNING: The sup-file in chr.file is automatically overwritten
 
