@@ -1,4 +1,4 @@
-update.sup <- function(chr.file = NULL, lst.loads = NULL) {
+update.sup <- function(chr.file = NULL, lst.loads = NULL, df.sup.lines = NULL) {
 ## updates mon-accum and mon-sqolim data in the sup-file 
 ## input
 ## chr.file is the sup file to be updated 
