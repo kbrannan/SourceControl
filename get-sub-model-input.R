@@ -29,7 +29,7 @@ get.sub.model.input <- function(df.sub.model.sources.folders,
 ## create data frame for output  
   df.sub.model.input <- cbind(df.sub.model.sources.folders,
                               array(data = NA, 
-                                    dim = c(length(df.sub.model.info[,1]),
+                                    dim = c(length(df.sub.model.sources.folders[,1]),
                                             max(num.number.of.sub.wtsds)),
                                     dimnames = NULL))
   chr.col.names <- 
