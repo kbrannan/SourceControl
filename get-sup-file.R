@@ -9,6 +9,9 @@ chr.dir.hspf <- paste0(chr.dir.source.control.scripts, "/hspf")
 chr.file.sup <- "bigelkwq.sup"
 
 
+
+options(stringsAsFactors = FALSE)
+
 chr.sup <- scan(file = paste0(chr.dir.hspf, "/", chr.file.sup),
              what = "character",
              sep = "\n", quiet = TRUE)
@@ -25,9 +28,25 @@ chr.sup.accum <- chr.sup[lng.accum.blk[1]:lng.accum.blk[2]]
 
 chr.sup.sqolim <- chr.sup[lng.sqolim.blk[1]:lng.sqolim.blk[2]]
 
-gsub("(( ){1,}12)|[^0-9]","",chr.sup.accum[seq(from = 1, to = length(chr.sup.accum), by = 2)])
 
+make.mon.df <- function(chr.table, chr.pre = "") {
 
-do.call(rbind,strsplit(chr.sup.accum[seq(from = 1, to = length(chr.sup.accum), by = 2)],
-         split = "( ){1,}"))
-chr.sup.accum[seq(from = 2, to = length(chr.sup.accum), by = 2)]
+  chr.sup.line <- gsub("(( ){1,}12)|[^0-9]","",
+                       chr.table[seq(from = 1, 
+                                               to = length(chr.table), 
+                                               by = 2)])
+  df.table <- as.data.frame(
+    cbind(
+      strftime(as.POSIXct(paste0("1967-",1:12,"-1")), format = "%b"),
+      do.call(cbind,
+              strsplit(chr.table[
+                seq(from = 2, to = length(chr.table), by = 2)],
+                split = "( ){1,}"))[-1,]))
+  
+  names(df.table) <- c("month", paste0(chr.pre, "supln",chr.sup.line))  
+  return(df.table)
+}
+
+df.accum <- make.mon.df(chr.sup.accum, "accum")
+df.sqolim <- make.mon.df(chr.sup.sqolim, "sqolim")
+
