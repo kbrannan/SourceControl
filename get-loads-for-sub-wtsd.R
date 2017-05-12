@@ -1,17 +1,17 @@
-get.loads.for.sub.wtsd <- function(chr.sub.wtsd.name, lst.loads) {
+get.loads.for.sub.wtsd <- function(chr.sub.wtsd.name, lst.output) {
   ## function contructs data frma in long format for loads from all sources
   ## to each pls in a sub watershed for accum, lim and stream loads
   ##
   ## chr.sub.wtsd - character for sub-watershed in the loads list
-  ## lst.loads - list that contains names of the sources, names of 
+  ## lst.output - list that contains names of the sources, names of 
   ##             sub-watersheds all the data.frame outputs from source models.
   ##             The list is output from run.sub.models.for.sources.parallel
   
   ## get vector for month names
-  chr.months <- lst.loads[lst.loads[[1]][1]][[1]][[1]]$Month
+  chr.months <- lst.output[lst.output[[1]][1]][[1]][[1]]$Month
   
   ## get the pls names
-  chr.pls.names <- get.pls.names(lst.loads)
+  chr.pls.names <- get.pls.names(lst.output)
   
   ## create wrapper functions for using get.accum.load.to.pls and 
   ## get.lim.load.to.pls in lapply
@@ -28,15 +28,15 @@ get.loads.for.sub.wtsd <- function(chr.sub.wtsd.name, lst.loads) {
   
   ## get accum load
   lst.accum <- lapply(chr.pls.names, f.wrapper.accum, chr.sub.wtsd.name, 
-                      lst.loads)
+                      lst.output)
   names(lst.accum) <- paste0("accum.", chr.pls.names)
   
   ## get lim load
-  lst.lim <- lapply(chr.pls.names, f.wrapper.lim, chr.sub.wtsd.name, lst.loads)
+  lst.lim <- lapply(chr.pls.names, f.wrapper.lim, chr.sub.wtsd.name, lst.output)
   names(lst.lim) <- paste0("lim.", chr.pls.names)
   
   ## get load to stream
-  df.load.stream <- get.load.to.stream(chr.sub.wtsd.name, lst.loads)
+  df.load.stream <- get.load.to.stream(chr.sub.wtsd.name, lst.output)
   
   ## function to extract the rows from accum or lim lists
   get.rows.lst <- function(chr.pls, lst.loads, chr.prefix) {

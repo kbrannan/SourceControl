@@ -1,9 +1,9 @@
-get.accum.load.to.pls <- function(chr.sub.wtsd, chr.pls, lst.loads) {
+get.accum.load.to.pls <- function(chr.sub.wtsd, chr.pls, lst.output) {
   ## function sums accum loads from all sources to a pls in a sub watersheds
   ##
   ## chr.sub.wtsd - character for sub-watershed in the loads list
   ## chr.pls - character for the pls in the loads list for chr.sub.wtsd
-  ## lst.loads - list that contains names of the sources, names of 
+  ## lst.output - list that contains names of the sources, names of 
   ##             sub-watersheds all the data.frame outputs from source models.
   ##             The list is output from run.sub.models.for.sources.parallel
   
@@ -11,7 +11,7 @@ get.accum.load.to.pls <- function(chr.sub.wtsd, chr.pls, lst.loads) {
   chr.prefix <- "accum.*"
   
   ## the number od sources in the loads list
-  n.src <- length(lst.loads$source.names)
+  n.src <- length(lst.output$source.names)
   
   ## create character vector of the names of months for use in load data.frame
   pct.mons <- as.POSIXlt(paste0("1999-",1:12,"-01"))
@@ -25,7 +25,7 @@ get.accum.load.to.pls <- function(chr.sub.wtsd, chr.pls, lst.loads) {
   
   ## loop through all the sources and populate the data.frame for the pls
   for(ii.src in 1:n.src) {
-    df.cur <- lst.loads[[lst.loads$source.names[ii.src]]][chr.sub.wtsd][[1]]
+    df.cur <- lst.output[[lst.output$source.names[ii.src]]][chr.sub.wtsd][[1]]
     col.cur <- grep(paste0(chr.prefix,chr.pls),names(df.cur), ignore.case = TRUE)
     if(length(col.cur) != 0) {
   ## if the source has accum for pls extract from load data.frame
@@ -41,7 +41,7 @@ get.accum.load.to.pls <- function(chr.sub.wtsd, chr.pls, lst.loads) {
               parse(
                 text = paste0("data.frame(",
                               paste0(names(df.dest), " = '", 
-                                     c(lst.loads$source.names[ii.src],
+                                     c(lst.output$source.names[ii.src],
                                        chr.ld),"'",
                                      collapse = " ,"), 
                               ", stringsAsFactors = FALSE)")))
