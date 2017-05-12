@@ -12,6 +12,8 @@ source.control <- function(df.control) {
 ##  chr.pat.sub.model.input is pattern as a regular expression to search for input file names
 ##  NOTE: all fields are character data type
 
+  options(stringsAsFactors = FALSE)
+  
 ## assign varaible values
   chr.dir.source.control.scripts <- df.control$chr.dir.source.control.scripts
   chr.dir.hspf <- df.control$chr.dir.hspf
