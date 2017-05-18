@@ -14,8 +14,6 @@ source.control <- function(df.control) {
 
   options(stringsAsFactors = FALSE)
   
-  chr.hold <- ls()
-  
 ## assign varaible values
   chr.dir.source.control.scripts <- df.control$chr.dir.source.control.scripts
   chr.dir.hspf <- df.control$chr.dir.hspf
@@ -26,36 +24,21 @@ source.control <- function(df.control) {
   chr.pat.sub.model.input <- df.control$chr.pat.sub.model.input
   
   ## load functions
-  source(paste0(chr.dir.source.control.scripts, "/", 
+  source(paste0(chr.dir.source.control.scripts, "/",
                 "get-sub-model-info.R"), local = TRUE)
-  source(paste0(chr.dir.source.control.scripts, "/", 
+  source(paste0(chr.dir.source.control.scripts, "/",
                 "get-sub-model-input.R"), local = TRUE)
-  source(paste0(chr.dir.source.control.scripts, "/", 
-                "run-source-model-for-sub-wtds.R"), local = TRUE)
-  source(paste0(chr.dir.source.control.scripts, "/", 
-                "run-source-model-for-sub-wtds-parallel.R"), local = TRUE)
-  source(paste0(chr.dir.source.control.scripts, "/", 
-                "run-sub-models-for-sources.R"), local = TRUE)
-  source(paste0(chr.dir.source.control.scripts, "/", 
+  source(paste0(chr.dir.source.control.scripts, "/",
                 "run-sub-models-for-sources-parallel.R"), local = TRUE)
   source(paste0(chr.dir.source.control.scripts, "/", 
-                "get-accum-load-to-pls.R"), local = TRUE)
-  source(paste0(chr.dir.source.control.scripts, "/", 
-                "get-lim-load-to-pls.R"), local = TRUE)
-  source(paste0(chr.dir.source.control.scripts, "/", 
-                "get-load-to-stream.R"), local = TRUE)
-  source(paste0(chr.dir.source.control.scripts, "/", 
                 "get-pls-names.R"), local = TRUE)
-  source(paste0(chr.dir.source.control.scripts, "/", 
-                "get-loads-for-sub-wtsd.R"), local = TRUE)
-  source(paste0(chr.dir.source.control.scripts, "/", 
-                "write-mutsin-files.R"), local = TRUE)
-  source(paste0(chr.dir.source.control.scripts, "/", 
-                "update-sup.R"), local = TRUE)
-  ## not working yet
-  source(paste0(chr.dir.source.control.scripts, "/", 
+  source(paste0(chr.dir.source.control.scripts, "/",
                 "get-loads-for-sub-wtsds-parallel.R"))
-  source(paste0(chr.dir.source.control.scripts, "/", 
+  source(paste0(chr.dir.source.control.scripts, "/",
+                "write-mutsin-files.R"), local = TRUE)
+  source(paste0(chr.dir.source.control.scripts, "/",
+                "update-sup.R"), local = TRUE)
+  source(paste0(chr.dir.source.control.scripts, "/",
                 "get-pls-line-info.R"), local = TRUE)
 
   # get the sub model information
@@ -69,34 +52,16 @@ source.control <- function(df.control) {
       df.sub.model.sources.folders = df.sub.model.info[,1:2],
       chr.pat.sub.model.input = chr.pat.sub.model.input)
   
-  ## run all the source sub models for all the sub watersheds
-##  lst.output <- run.sub.models.for.sources(df.sub.model.info, 
-##                                           df.sub.model.input.files)
-  
   ## run in parallel all the source sub models for all the sub watersheds
-  lst.output <- run.sub.models.for.sources.parallel(df.sub.model.info,
-                                                    df.sub.model.input.files)
+  lst.output <- 
+    run.sub.models.for.sources.parallel(df.sub.model.info,
+                                        df.sub.model.input.files,
+                                        chr.dir.source.control.scripts)
   
-  ## run get.loads.for.sub.wtsd for all sub-watersheds and put the 
-  ## data.frames into a list. I will use the list to rewrite the sup-file and write the MUTSIN files.
-  # lst.loads <- lapply(lst.output$sub.wtsd.names, 
-  #                     get.loads.for.sub.wtsd, lst.output)
-  
-  ## can't access get.pls.names from with in "get.loads.for.sub.wtsd" function
+  ## run in parallel to get loads for pls for all sub-watersheds
  lst.loads <- get.loads.for.sub.wtsd.parallel(lst.output$sub.wtsd.names,
-                                              lst.output)
-  ## load packages
-  # library(parallel)
-  # 
-  # ## create cluster
-  # no_cores <- detectCores() - 1
-  # if(no_cores < 1) no_cores <- 1
-  # c1 <- makeCluster(no_cores)
-  # ##clusterExport(c1,ls())
-  # lst.loads <- parLapply(c1, lst.output$sub.wtsd.names, 
-  #                        get.loads.for.sub.wtsd, lst.output)
-  
-  
+                                              lst.output,
+                                              chr.dir.source.control.scripts)
   names(lst.loads) <- lst.output$sub.wtsd.names
   
   ## get the lines in the sup file for the pls
@@ -127,6 +92,4 @@ source.control <- function(df.control) {
   junk <- lapply(names(lst.loads), wrapper.write.mutsin, lst.loads, chr.dir.hspf, 
                  chr.file.uci, "Upper Yaquina River")
   rm(junk)  
-  chr.all <- ls()
-  rm(list = chr.all[-1 * match(chr.hold, chr.all)])
 }

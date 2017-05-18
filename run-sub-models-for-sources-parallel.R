@@ -1,11 +1,17 @@
 
 run.sub.models.for.sources.parallel <- function(df.sub.model.info, 
-                                       df.sub.model.input.files) {
+                                       df.sub.model.input.files,
+                                       chr.dir.source.control.scripts = NULL) {
   ## functions runs sub models for all the sources in df.sub.model.info
   ## using all the input files in df.sub.model.input.files
   ##
   ## df.sub.model.info is data frame output from function
+  ## chr.dir.source.control.scripts is Source control scripts folder
   
+  
+  ## load function to run source models for al sub-watersheds
+  source(paste0(chr.dir.source.control.scripts, "/",
+                "run-source-model-for-sub-wtds.R"), local = TRUE)
   
   ## start function running for all sources
   lst.output <- list(source.names = df.sub.model.info$source,
