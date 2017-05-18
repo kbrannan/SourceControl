@@ -1,4 +1,4 @@
-get.lim.load.to.pls <- function(chr.sub.wtsd, chr.pls, lst.output) {
+get.lim.load.to.pls <- function(chr.pls, chr.sub.wtsd, lst.output) {
   ## function sums lim loads from all sources to a pls in a sub watersheds
   ##
   ## chr.sub.wtsd - character for sub-watershed in the loads list

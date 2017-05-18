@@ -1,4 +1,4 @@
-get.accum.load.to.pls <- function(chr.pls, chr.sub.wtsd, lst.output) {
+get.accum.load.to.pls.alt <- function(chr.pls, lst.sub.output) {
   ## function sums accum loads from all sources to a pls in a sub watersheds
   ##
   ## chr.sub.wtsd - character for sub-watershed in the loads list
@@ -10,8 +10,11 @@ get.accum.load.to.pls <- function(chr.pls, chr.sub.wtsd, lst.output) {
   ## prefix used to search source data.frames for accum loads
   chr.prefix <- "accum.*"
   
+  ## get names of sources in list
+  chr.sub.sources <- names(lst.sub.output)
+  
   ## the number od sources in the loads list
-  n.src <- length(lst.output$source.names)
+  n.src <- length(chr.sub.sources)
   
   ## create character vector of the names of months for use in load data.frame
   pct.mons <- as.POSIXlt(paste0("1999-",1:12,"-01"))
@@ -22,10 +25,63 @@ get.accum.load.to.pls <- function(chr.pls, chr.sub.wtsd, lst.output) {
              c("source", strftime(as.POSIXlt(paste0("1999-",1:12,"-01")), 
                                   format = "%b"))),
     stringsAsFactors = FALSE)
+
+    chr.source <- chr.sub.sources[ii.src]
+    df.cur <- lst.sub.output[[chr.source]]
+    
+
+    lcl.get.loads <- function(chr.source, chr.pls, df.cur, chr.prefix) {
+      col.cur <- grep(paste0(chr.prefix,chr.pls),names(df.cur), ignore.case = TRUE)
+      if(length(col.cur) != 0) {
+        ## if the source has accum for pls extract from load data.frame
+        chr.ld <- as.character(df.cur[,col.cur])
+      } else {
+        ## if the source does not have accum for pls set to 0
+        chr.ld <- rep("0", 12)
+      }
+      ## add current source loads to pls to the data.frame for the loads
+      df.dest <- eval(parse(
+        text = paste0("data.frame(",
+                      paste0(names(df.dest), " = '", 
+                             c(chr.source,
+                               chr.ld),"'", collapse = " ,"), ", 
+                      stringsAsFactors = FALSE)")))
+      }
+
+    junk <- lapply()
+    
+        
+    col.cur <- grep(paste0(chr.prefix,chr.pls),names(df.cur), ignore.case = TRUE)
+    if(length(col.cur) != 0) {
+      ## if the source has accum for pls extract from load data.frame
+      chr.ld <- as.character(df.cur[,col.cur])
+    } else {
+      ## if the source does not have accum for pls set to 0
+      chr.ld <- rep("0", 12)
+    }
+    ## add current source loads to pls to the data.frame for the loads
+    df.dest <- 
+      rbind(df.dest,
+            eval(
+              parse(
+                text = paste0("data.frame(",
+                              paste0(names(df.dest), " = '", 
+                                     c(lst.output$source.names[ii.src],
+                                       chr.ld),"'",
+                                     collapse = " ,"), 
+                              ", stringsAsFactors = FALSE)")))
+      )
+    ## clean up
+    rm(df.cur, col.cur)
+  }
   
+  
+  
+  
+    
   ## loop through all the sources and populate the data.frame for the pls
   for(ii.src in 1:n.src) {
-    df.cur <- lst.output[[lst.output$source.names[ii.src]]][chr.sub.wtsd][[1]]
+    df.cur <- lst.sub.output[[chr.sub.sources[ii.src]]]
     col.cur <- grep(paste0(chr.prefix,chr.pls),names(df.cur), ignore.case = TRUE)
     if(length(col.cur) != 0) {
   ## if the source has accum for pls extract from load data.frame

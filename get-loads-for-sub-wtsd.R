@@ -6,7 +6,9 @@ get.loads.for.sub.wtsd <- function(chr.sub.wtsd.name, lst.output) {
   ## lst.output - list that contains names of the sources, names of 
   ##             sub-watersheds all the data.frame outputs from source models.
   ##             The list is output from run.sub.models.for.sources.parallel
-  
+
+  options(stringsAsFactors = FALSE)
+    
   ## get vector for month names
   chr.months <- lst.output[lst.output[[1]][1]][[1]][[1]]$Month
   
@@ -15,24 +17,30 @@ get.loads.for.sub.wtsd <- function(chr.sub.wtsd.name, lst.output) {
   
   ## create wrapper functions for using get.accum.load.to.pls and 
   ## get.lim.load.to.pls in lapply
-  f.wrapper.accum <- function(wr.pls, wr.sub, wr.lst) {
-    df.out <- get.accum.load.to.pls(wr.sub,
-                                    wr.pls, wr.lst)
-    return(df.out)
-  }
-  f.wrapper.lim <- function(wr.pls, wr.sub, wr.lst) {
-    df.out <- get.lim.load.to.pls(wr.sub,
-                                  wr.pls, wr.lst)
-    return(df.out)
-  }
+  # f.wrapper.accum <- function(wr.pls, wr.sub, wr.lst) {
+  #   df.out <- get.accum.load.to.pls(wr.sub,
+  #                                   wr.pls, wr.lst)
+  #   return(df.out)
+  # }
+  # f.wrapper.lim <- function(wr.pls, wr.sub, wr.lst) {
+  #   df.out <- get.lim.load.to.pls(wr.sub,
+  #                                 wr.pls, wr.lst)
+  #   return(df.out)
+  # }
   
   ## get accum load
-  lst.accum <- lapply(chr.pls.names, f.wrapper.accum, chr.sub.wtsd.name, 
+  # lst.accum <- lapply(chr.pls.names, f.wrapper.accum, chr.sub.wtsd.name, 
+  #                     lst.output)
+  # names(lst.accum) <- paste0("accum.", chr.pls.names)
+
+  lst.accum <- lapply(chr.pls.names, get.accum.load.to.pls, chr.sub.wtsd.name, 
                       lst.output)
   names(lst.accum) <- paste0("accum.", chr.pls.names)
   
+    
   ## get lim load
-  lst.lim <- lapply(chr.pls.names, f.wrapper.lim, chr.sub.wtsd.name, lst.output)
+  lst.lim <- lapply(chr.pls.names, get.lim.load.to.pls, chr.sub.wtsd.name, 
+                    lst.output)
   names(lst.lim) <- paste0("lim.", chr.pls.names)
   
   ## get load to stream
