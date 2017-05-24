@@ -13,7 +13,7 @@ source.control <- function(df.control) {
 ##  NOTE: all fields are character data type
 
   options(stringsAsFactors = FALSE)
-  
+
 ## assign varaible values
   chr.dir.source.control.scripts <- df.control$chr.dir.source.control.scripts
   chr.dir.hspf <- df.control$chr.dir.hspf
@@ -59,9 +59,9 @@ source.control <- function(df.control) {
                                         chr.dir.source.control.scripts)
   
   ## run in parallel to get loads for pls for all sub-watersheds
- lst.loads <- get.loads.for.sub.wtsd.parallel(lst.output$sub.wtsd.names,
-                                              lst.output,
-                                              chr.dir.source.control.scripts)
+  lst.loads <- get.loads.for.sub.wtsd.parallel(lst.output$sub.wtsd.names,
+                                               lst.output,
+                                               chr.dir.source.control.scripts)
   names(lst.loads) <- lst.output$sub.wtsd.names
   
   ## get the lines in the sup file for the pls
@@ -92,4 +92,5 @@ source.control <- function(df.control) {
   junk <- lapply(names(lst.loads), wrapper.write.mutsin, lst.loads, chr.dir.hspf, 
                  chr.file.uci, "Upper Yaquina River")
   rm(junk)  
+  
 }

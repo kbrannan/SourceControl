@@ -10,6 +10,8 @@ get.loads.for.sub.wtsd <- function(chr.sub.wtsd.name, lst.output,
   ## chr.dir.source.control.scripts is Source control scripts folder
 
   options(stringsAsFactors = FALSE)
+  ## load packages
+  library(parallel)
   
   source(paste0(chr.dir.source.control.scripts, "/",
                 "get-pls-names.R"), local = TRUE)
@@ -25,10 +27,22 @@ get.loads.for.sub.wtsd <- function(chr.sub.wtsd.name, lst.output,
   
   ## get the pls names
   chr.pls.names <- get.pls.names(lst.output)
+
+  ## create cluster
+  no_cores <- detectCores() - 1
+  if(no_cores < 1) no_cores <- 1
+  c1 <- makeCluster(no_cores)
+
+  ## run get.loads.for.sub.wtsd for all of the sub-watersheds in 
+  ## chr.sub.wtsd.names
+  clusterExport(c1, lsf.str())
+  lst.loads.sub.wtsds <- parLapply(c1, chr.pls.names, get.accum.load.to.pls, 
+                                   chr.sub.wtsd.name, lst.output)
   
+      
   ## get accum loads
-  lst.accum <- lapply(chr.pls.names, get.accum.load.to.pls, chr.sub.wtsd.name, 
-                      lst.output)
+  # lst.accum <- lapply(chr.pls.names, get.accum.load.to.pls, chr.sub.wtsd.name, 
+  #                     lst.output)
   names(lst.accum) <- paste0("accum.", chr.pls.names)
     
   ## get lim load

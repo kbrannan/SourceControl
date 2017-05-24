@@ -19,10 +19,10 @@ get.accum.load.to.pls <- function(chr.pls, chr.sub.wtsd, lst.output) {
   ## create empty data.frame for the loads to the pls from all the sources
   df.dest <- as.data.frame(
     setNames(replicate(13,character(0)),
-             c("source", strftime(as.POSIXlt(paste0("1999-",1:12,"-01")), 
+             c("source", strftime(as.POSIXlt(paste0("1999-",1:12,"-01")),
                                   format = "%b"))),
     stringsAsFactors = FALSE)
-  
+
   ## loop through all the sources and populate the data.frame for the pls
   for(ii.src in 1:n.src) {
     df.cur <- lst.output[[lst.output$source.names[ii.src]]][chr.sub.wtsd][[1]]
@@ -35,20 +35,25 @@ get.accum.load.to.pls <- function(chr.pls, chr.sub.wtsd, lst.output) {
       chr.ld <- rep("0", 12)
     }
   ## add current source loads to pls to the data.frame for the loads
-    df.dest <- 
+    df.dest <-
       rbind(df.dest,
             eval(
               parse(
                 text = paste0("data.frame(",
-                              paste0(names(df.dest), " = '", 
+                              paste0(names(df.dest), " = '",
                                      c(lst.output$source.names[ii.src],
                                        chr.ld),"'",
-                                     collapse = " ,"), 
+                                     collapse = " ,"),
                               ", stringsAsFactors = FALSE)")))
       )
   ## clean up
     rm(df.cur, col.cur)
   }
+  
+  # df.dest <- do.call(rbind,lapply(lst.output$source.names, get.source.load, 
+  #                              chr.prefix, chr.pls,
+  #                              chr.sub.wtsd, lst.output))
+  
   ## sum across sources by month to get monthly load to pls
   vec.loads <- colSums(sapply(df.dest[, 2:13], as.numeric))
   df.loads <- data.frame(month = names(vec.loads),
