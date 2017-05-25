@@ -31,25 +31,31 @@ get.loads.for.sub.wtsd <- function(chr.sub.wtsd.name, lst.output,
   ## create cluster
   no_cores <- detectCores() - 1
   if(no_cores < 1) no_cores <- 1
-  c1 <- makeCluster(no_cores)
+  c2 <- makeCluster(no_cores)
 
   ## run get.loads.for.sub.wtsd for all of the sub-watersheds in 
   ## chr.sub.wtsd.names
-  clusterExport(c1, lsf.str())
-  lst.loads.sub.wtsds <- parLapply(c1, chr.pls.names, get.accum.load.to.pls, 
-                                   chr.sub.wtsd.name, lst.output)
+  ## clusterExport(c2, lsf.str())
   
-      
+  ## get accum loads
+  lst.accum <- parLapply(c2, chr.pls.names, get.accum.load.to.pls, 
+                                   chr.sub.wtsd.name, lst.output)
+
   ## get accum loads
   # lst.accum <- lapply(chr.pls.names, get.accum.load.to.pls, chr.sub.wtsd.name, 
   #                     lst.output)
   names(lst.accum) <- paste0("accum.", chr.pls.names)
     
   ## get lim load
-  lst.lim <- lapply(chr.pls.names, get.lim.load.to.pls, chr.sub.wtsd.name, 
-                    lst.output)
+  # lst.lim <- lapply(chr.pls.names, get.lim.load.to.pls, chr.sub.wtsd.name, 
+  #                   lst.output)
+  lst.lim <- parLapply(c2, chr.pls.names, get.lim.load.to.pls, 
+                         chr.sub.wtsd.name, lst.output)
   names(lst.lim) <- paste0("lim.", chr.pls.names)
-  
+
+  ## close cluster
+  stopCluster(c2)
+
   ## get load to stream
   df.load.stream <- get.load.to.stream(chr.sub.wtsd.name, lst.output)
   

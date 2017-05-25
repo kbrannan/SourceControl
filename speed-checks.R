@@ -1,4 +1,3 @@
-install.packages("rbenchmark")
 library(rbenchmark)
 
 system.time(source.control(df.control = df.control))
@@ -28,9 +27,3 @@ system.time(lst.loads.sub.wtsds <- parLapply(c1, chr.sub.wtsd.names,
 
 system.time(lst.accum <- lapply(chr.pls.names, get.accum.load.to.pls, chr.sub.wtsd.names[2], 
                                 lst.output))
-
-junk <- do.call(rbind,lapply(lst.output$source.names, get.source.load, 
-               chr.prefix, chr.pls.names[2],
-               chr.sub.wtsd.names[1], lst.output))
-
-
