@@ -33,7 +33,7 @@ source.control <- function(df.control) {
   source(paste0(chr.dir.source.control.scripts, "/", 
                 "get-pls-names.R"), local = TRUE)
   source(paste0(chr.dir.source.control.scripts, "/",
-                "get-loads-for-sub-wtsds-parallel.R"))
+                "wrapper-get-loads-parallel.R"))
   source(paste0(chr.dir.source.control.scripts, "/",
                 "write-mutsin-files.R"), local = TRUE)
   source(paste0(chr.dir.source.control.scripts, "/",
@@ -59,10 +59,17 @@ source.control <- function(df.control) {
                                         chr.dir.source.control.scripts)
   
   ## run in parallel to get loads for pls for all sub-watersheds
-  lst.loads <- get.loads.for.sub.wtsd.parallel(lst.output$sub.wtsd.names,
-                                               lst.output,
-                                               chr.dir.source.control.scripts)
-  names(lst.loads) <- lst.output$sub.wtsd.names
+  # lst.loads <- wrapper.quick.get.parallel(lst.output$sub.wtsd.names,
+  #                                              lst.output,
+  #                                              chr.dir.source.control.scripts)
+  # names(lst.loads) <- lst.output$sub.wtsd.names
+  chr.pls.names <- get.pls.names(lst.output)
+  df.loads.accum <- wrapper.get.loads.parallel("accum", chr.pls.names, lst.output,
+                               chr.dir.source.control.scripts)
+  df.loads.sqolim <- wrapper.get.loads.parallel("sqolim", chr.pls.names, lst.output,
+                                                chr.dir.source.control.scripts)
+  
+  df.loads <- rbind(df.loads.accum, df.loads.sqolim)
   
   ## get the lines in the sup file for the pls
   df.sup.lines <- get.pls.line.info(paste0(chr.dir.hspf, "/",
