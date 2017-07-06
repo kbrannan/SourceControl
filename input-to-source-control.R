@@ -1,5 +1,6 @@
 options(stringsAsFactors = FALSE)
 chr.dir.source.control.scripts.chk <- "M:/Models/Bacteria/HSPF/bacteria-sub-model-testing/SourceControl"
+source(file = paste0(chr.dir.source.control.scripts.chk, "/", "source-control.R"))
 df.control.chk <- data.frame(
   chr.dir.source.control.scripts = chr.dir.source.control.scripts.chk,
   chr.dir.hspf = paste0(chr.dir.source.control.scripts.chk, "/hspf"),
